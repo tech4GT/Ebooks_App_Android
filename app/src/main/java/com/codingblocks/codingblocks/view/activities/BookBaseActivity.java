@@ -3,6 +3,8 @@ package com.codingblocks.codingblocks.view.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codingblocks.codingblocks.R;
+import com.codingblocks.codingblocks.view.fragments.BookPageFragment;
 
 public class BookBaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,10 +62,13 @@ public class BookBaseActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = null;
         if (id == R.id.nav_1) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_1_1) {
+
+             fragment = new BookPageFragment();
 
         } else if (id == R.id.nav_1_2) {
 
@@ -73,7 +79,9 @@ public class BookBaseActivity extends AppCompatActivity
         } else if (id == R.id.nav_2_2) {
 
         }
-
+        fragmentTransaction
+                .replace(R.id.flBookFrame,fragment)
+                .commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
