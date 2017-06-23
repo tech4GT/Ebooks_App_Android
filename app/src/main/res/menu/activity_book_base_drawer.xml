@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/nav_1"
+            android:title="1. Getting Started" >
+            <menu>
+                <item
+                    android:id="@+id/nav_1_1"
+                    android:title="1.1 Running JS Code"
+                    />
+                <item
+                    android:id="@+id/nav_1_2"
+                    android:title="1.2 Input and Output"
+                    />
+            </menu>
+        </item>
+        <item
+            android:id="@+id/nav_2"
+            android:title="2. Basics And Syntax" >
+            <menu>
+                <item
+                    android:id="@+id/nav_2_1"
+                    android:title="2.1 Common Syntax"
+                    />
+                <item
+                    android:id="@+id/nav_2_2"
+                    android:title="2.1 Variables"
+                    />
+            </menu>
+        </item>
+
+
+
+</menu>
