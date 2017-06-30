@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.codingblocks.codingblocks.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,8 +78,8 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = li.inflate(android.R.layout.simple_list_item_1,null);
-        TextView textView = (TextView) root.findViewById(android.R.id.text1);
+        View root = li.inflate(R.layout.sublist_layout,null);
+        TextView textView = (TextView) root.findViewById(R.id.tvSublist);
         textView.setText(getChild(groupPosition,childPosition));
         return root;
     }
