@@ -7,7 +7,6 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import net.nightwhistler.htmlspanner.HtmlSpanner;
 
 import im.delight.android.webview.AdvancedWebView;
 

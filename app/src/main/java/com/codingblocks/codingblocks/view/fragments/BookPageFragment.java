@@ -10,13 +10,6 @@ import android.view.ViewGroup;
 
 import com.codingblocks.codingblocks.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import br.tiagohm.markdownview.MarkdownView;
-import br.tiagohm.markdownview.css.ExternalStyleSheet;
 import im.delight.android.webview.AdvancedWebView;
 
 
@@ -27,7 +20,6 @@ public class BookPageFragment extends Fragment {
 
 
 
-    MarkdownView markdownView;
     AdvancedWebView webView;
     public static final String TAG = "BookPageFragment";
     public BookPageFragment() {

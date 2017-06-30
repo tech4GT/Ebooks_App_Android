@@ -110,7 +110,32 @@ public class BookBaseActivity extends AppCompatActivity
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Log.d(TAG, "onGroupClick: ");
+                String thisJson = groupList.get(groupPosition);
+                Chapter ch = new Chapter();
+                for(Chapter contents : thisContents[0].getProgress().getChapters()){
+                    if(thisJson.equals(contents.getTitle())){
+                        ch = contents;
+                        ch.setPath(ch.getPath().replace(".md",".json"));
+                    }
+                }
+                APIBook.getInstance().retrofit
+                        .create(apiFetchInterface.class)
+                        .getBook(ch.getPath())
+                        .enqueue(new Callback<BookData>() {
+                            @Override
+                            public void onResponse(Call<BookData> call, Response<BookData> response) {
+                                Log.d(TAG, "onResponse: ");
+                                Fragment fragment = BookPageFragment.getInstance(response.body().getSections().get(0).getContent());
+                                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.flBookFrame,fragment);
+                                fragmentTransaction.commit();
+                            }
 
+                            @Override
+                            public void onFailure(Call<BookData> call, Throwable t) {
+                                Log.d(TAG, "onFailure: " + t.getMessage());
+                            }
+                        });
 
                 return false;
             }
