@@ -18,13 +18,22 @@ import android.view.MenuItem;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import com.codingblocks.codingblocks.Network.API;
+import com.codingblocks.codingblocks.Network.interfaces.apiFetchInterface;
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.adapters.ExapndableListAdapter;
+import com.codingblocks.codingblocks.models.Chapter;
+import com.codingblocks.codingblocks.models.Contents;
 import com.codingblocks.codingblocks.models.GenerateList;
 import com.codingblocks.codingblocks.view.fragments.BookPageFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BookBaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,15 +46,48 @@ public class BookBaseActivity extends AppCompatActivity
         setContentView(R.layout.activity_book_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ArrayList<String> groupList = new ArrayList<>();
-        HashMap<String,ArrayList<String>> childMap = new HashMap<>();
+        final ArrayList<String> groupList = new ArrayList<>();
+        final HashMap<String,ArrayList<String>> childMap = new HashMap<>();
+        final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
+        apiFetchInterface fetchInterface = API.getInstance().retrofit.create(apiFetchInterface.class);
+        fetchInterface.getContent().enqueue(new Callback<Contents>() {
+            @Override
+            public void onResponse(Call<Contents> call, Response<Contents> response) {
 
-        GenerateList.generateList(groupList,childMap);
+                Pattern pattern = Pattern.compile("(?<=^| )\\d+(\\.\\d+)?(?=$| )");
+                String thisGroup  = "";
+                ArrayList<String> thisGroupChild = new ArrayList<String>();
+
+                for(Chapter chapter : response.body().getProgress().getChapters()){
+                    if(pattern.matcher(chapter.getLevel()).matches() ){
+                        thisGroup = chapter.getTitle();
+                        groupList.add(thisGroup);
+                        thisGroupChild = new ArrayList<String>();
+                        Log.d(TAG, "onResponse: if" + thisGroup);
+                        childMap.put(thisGroup,thisGroupChild);
+                    }else{
+                        thisGroupChild.add(chapter.getTitle());
+                        childMap.put(thisGroup,thisGroupChild);
+                        Log.d(TAG, "onResponse: else" + chapter.getTitle());
+                    }
+                }
+
+                exapndableListAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onFailure(Call<Contents> call, Throwable t) {
+
+            }
+        });
+//
+//        GenerateList.generateList(groupList,childMap);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
 
-        ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
+
         expandableListView.setAdapter(exapndableListAdapter);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

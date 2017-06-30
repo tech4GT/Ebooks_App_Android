@@ -22,7 +22,7 @@ public class GenerateList {
         child1.add("weirdly stuff");
         child1.add("but go and learn JS");
 
-        child2.add("Crux");
+        child2.add("YO");
         child2.add("all java here");
         child2.add("can be used to make android app");
 
