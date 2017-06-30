@@ -34,19 +34,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //    compile 'net.sourceforge.cssparser:cssparser:0.9.23'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'thereisnospon.codeview:codeview:0.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'us.feras.mdv:markdownview:1.1.0'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.github.tiagohm.MarkdownView:library:0.17.0'
-    testCompile 'junit:junit:4.12'
     compile 'com.github.raisercostin:osbcp-css-parser:master-SNAPSHOT'
     compile 'net.sourceforge.htmlcleaner:htmlcleaner:2.21'
     compile 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
-    //    compile 'net.sourceforge.cssparser:cssparser:0.9.23'
     compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 }

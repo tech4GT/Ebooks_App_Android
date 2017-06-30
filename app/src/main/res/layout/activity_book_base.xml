@@ -24,7 +24,8 @@
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/evNavigationList"></ExpandableListView>
+        android:id="@+id/evNavigationList"
+        android:layoutDirection="rtl"></ExpandableListView>
 
     </android.support.design.widget.NavigationView>
 

@@ -19,9 +19,11 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.codingblocks.codingblocks.Network.API;
+import com.codingblocks.codingblocks.Network.APIBook;
 import com.codingblocks.codingblocks.Network.interfaces.apiFetchInterface;
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.adapters.ExapndableListAdapter;
+import com.codingblocks.codingblocks.models.BookData.BookData;
 import com.codingblocks.codingblocks.models.Chapter;
 import com.codingblocks.codingblocks.models.Contents;
 import com.codingblocks.codingblocks.models.GenerateList;
@@ -50,6 +52,7 @@ public class BookBaseActivity extends AppCompatActivity
         final HashMap<String,ArrayList<String>> childMap = new HashMap<>();
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
         apiFetchInterface fetchInterface = API.getInstance().retrofit.create(apiFetchInterface.class);
+        final Contents[] thisContents = new Contents[1];
         fetchInterface.getContent().enqueue(new Callback<Contents>() {
             @Override
             public void onResponse(Call<Contents> call, Response<Contents> response) {
@@ -57,7 +60,7 @@ public class BookBaseActivity extends AppCompatActivity
                 Pattern pattern = Pattern.compile("(?<=^| )\\d+(\\.\\d+)?(?=$| )");
                 String thisGroup  = "";
                 ArrayList<String> thisGroupChild = new ArrayList<String>();
-
+                thisContents[0] = response.body();
                 for(Chapter chapter : response.body().getProgress().getChapters()){
                     if(pattern.matcher(chapter.getLevel()).matches() ){
                         thisGroup = chapter.getTitle();
@@ -84,9 +87,8 @@ public class BookBaseActivity extends AppCompatActivity
 //
 //        GenerateList.generateList(groupList,childMap);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
-
 
         expandableListView.setAdapter(exapndableListAdapter);
 
@@ -106,6 +108,8 @@ public class BookBaseActivity extends AppCompatActivity
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Log.d(TAG, "onGroupClick: ");
+
+
                 return false;
             }
         });
@@ -114,10 +118,33 @@ public class BookBaseActivity extends AppCompatActivity
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Log.d(TAG, "onChildClick: " + v.toString());
-                return false;
+                String thisJson = childMap.get(groupList.get(groupPosition)).get(childPosition);
+                Chapter ch = new Chapter();
+                for(Chapter contents : thisContents[0].getProgress().getChapters()){
+                    if(thisJson.equals(contents.getTitle())){
+                         ch = contents;
+                         ch.setPath(ch.getPath().replace(".md",".json"));
+                    }
+                }
+                Log.d(TAG, "onChildClick: " + ch.getPath());
+                APIBook.getInstance().retrofit
+                        .create(apiFetchInterface.class)
+                        .getBook(ch.getPath())
+                        .enqueue(new Callback<BookData>() {
+                            @Override
+                            public void onResponse(Call<BookData> call, Response<BookData> response) {
+                                Log.d(TAG, "onResponse: " + response.body().getSections().get(0).getContent());
+                            }
+
+                            @Override
+                            public void onFailure(Call<BookData> call, Throwable t) {
+                                Log.d(TAG, "onFailure: " + t.getMessage());
+                            }
+                        });
+//                drawer.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
-
 
 
     }
