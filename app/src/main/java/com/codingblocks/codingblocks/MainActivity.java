@@ -429,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
                 "}\n" +
 
                 "</style><body>" +
-                "<div class=\"gb without-animation with-summary font-size-2 font-family-1\">\n" +
+                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 ct2\">\n" +
                 "                        <div class=\"search-noresults\">\n" +
                 "                            <xq class=\"nm ms\">" +
                 "<h2 id=\"11-running-javascript\">1.1 Running Javascript</h2>\n<p>There are two ways we can try Javascript. Either using a Javascript REPL (REPL stands for read-eval-print loop, which means a &apos;shell&apos; or &apos;console&apos; like interface where you can write code line by line, and the interpreter interprets each line before you move to the next), or by writing a .js script file, and running it.</p>\n<h3 id=\"111-in-a-browser\">1.1.1 In a browser</h3>\n<p>Originally, Javascript was a browser-only language. And all web browsers support executing Javascript. You have two options -</p>\n<h4 id=\"repl\">REPL</h4>\n<p>Open the <em>console</em> of your browser. The shortcut would be the following - </p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align:left\">Browser</th>\n<th style=\"text-align:left\">Windows / Linux</th>\n<th style=\"text-align:left\">Mac OS</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align:left\">Firefox</td>\n<td style=\"text-align:left\">Ctrl + Shift + K</td>\n<td style=\"text-align:left\">Cmd + Shift + K</td>\n</tr>\n<tr>\n<td style=\"text-align:left\">Chrome</td>\n<td style=\"text-align:left\">Ctrl + Shift + J</td>\n<td style=\"text-align:left\">Cmd + Opt + J</td>\n</tr>\n</tbody>\n</table>\n<h4 id=\"running-a-script\">Running a script</h4>\n<p>In a folder save two files - <code>index.html</code> and <code>script.js</code></p>\n<p>In the <code>index.html</code> file, write the following code - </p>\n<pre><code class=\"lang-html\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">html</span>&gt;</span>\n<span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">head</span>&gt;</span>\n<span class=\"hljs-tag\">&lt;<span class=\"hljs-name\">script</span> <span class=\"hljs-attr\">src</span>=<span class=\"hljs-string\">&quot;script.js&quot;</span>&gt;</span><span class=\"undefined\"></span><span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">script</span>&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">head</span>&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-name\">html</span>&gt;</span>\n</code></pre>\n<p>Then write your Javascript code in the <code>script.js</code> file, and then open the <code>index.html</code>   file in a browser. Open the Web console if you want to see the output of your code. </p>\n<h3 id=\"112-without-a-browser-nodejs\">1.1.2 Without a browser (NodeJS)</h3>\n<p>We can also use <a href=\"http://nodejs.org\" target=\"_blank\">Node.JS</a> to run Javascript directly on a computer without having to use a Browser. Once Nodejs is installed we can do one of the following</p>\n<h4 id=\"repl\">REPL</h4>\n<p>Just enter the following command in your terminal </p>\n<pre><code class=\"lang-shell\">node\n</code></pre>\n<p>And that would bring to you the NodeJS REPL.</p>\n<h4 id=\"running-a-script\">Running a script</h4>\n<p>Running a script with Nodejs is straight forward. Save your Javascript code in a <code>script.js</code> file, and then, from the same folder, in a terminal run - </p>\n<pre><code class=\"lang-shell\">node server.js\n</code></pre>\n" +
@@ -446,18 +446,8 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setDisplayZoomControls(false);
-        long heapSize = Runtime.getRuntime().totalMemory();
-        Log.d("HEAP", "Heap Size = " + heapSize);
-        Log.d("TAG", "onCreate: " + String.valueOf(text.length()));
-        Log.d("TAG", "onCreate: " + String.valueOf(Integer.MAX_VALUE - text.length()));
+
         webView.loadHtml(text);
     }
 
-    private static String createDataSize(int msgSize) {
-        StringBuilder sb = new StringBuilder(msgSize);
-        for (int i=0; i<msgSize; i++) {
-            sb.append('a');
-        }
-        return sb.toString();
-    }
 }
