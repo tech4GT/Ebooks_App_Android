@@ -6,12 +6,9 @@
     tools:context="com.codingblocks.codingblocks.view.fragments.BookPageFragment"
     android:orientation="vertical"
     >
-
-    <br.tiagohm.markdownview.MarkdownView
-        android:id="@+id/markdown_view"
+    <im.delight.android.webview.AdvancedWebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        />
+        android:id="@+id/webview"></im.delight.android.webview.AdvancedWebView>
 
 </LinearLayout>

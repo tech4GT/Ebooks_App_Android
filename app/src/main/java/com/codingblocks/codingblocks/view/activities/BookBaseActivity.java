@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 
 import com.codingblocks.codingblocks.Network.API;
 import com.codingblocks.codingblocks.Network.APIBook;
@@ -133,7 +135,11 @@ public class BookBaseActivity extends AppCompatActivity
                         .enqueue(new Callback<BookData>() {
                             @Override
                             public void onResponse(Call<BookData> call, Response<BookData> response) {
-                                Log.d(TAG, "onResponse: " + response.body().getSections().get(0).getContent());
+                                Log.d(TAG, "onResponse: ");
+                                Fragment fragment = BookPageFragment.getInstance(response.body().getSections().get(0).getContent());
+                                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.flBookFrame,fragment);
+                                fragmentTransaction.commit();
                             }
 
                             @Override
@@ -141,7 +147,7 @@ public class BookBaseActivity extends AppCompatActivity
                                 Log.d(TAG, "onFailure: " + t.getMessage());
                             }
                         });
-//                drawer.closeDrawer(GravityCompat.START);
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
