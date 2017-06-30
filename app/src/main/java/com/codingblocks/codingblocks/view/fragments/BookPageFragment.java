@@ -47,6 +47,10 @@ public class BookPageFragment extends Fragment {
         return root;
     }
 
+    public void replacePage(String data){
+        setData(data);
+    }
+
 
     public void setData(String data){
         String text = "<html><style>" +
@@ -473,6 +477,7 @@ public class BookPageFragment extends Fragment {
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setDisplayZoomControls(false);
+        webView.animate();
 
         webView.loadHtml(text);
     }

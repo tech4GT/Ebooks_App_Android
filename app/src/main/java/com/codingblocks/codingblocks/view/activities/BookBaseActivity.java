@@ -44,6 +44,7 @@ public class BookBaseActivity extends AppCompatActivity
 
     ExpandableListView expandableListView;
     public static final String TAG = "BookBase";
+    Fragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,8 @@ public class BookBaseActivity extends AppCompatActivity
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
         apiFetchInterface fetchInterface = API.getInstance().retrofit.create(apiFetchInterface.class);
         final Contents[] thisContents = new Contents[1];
+
+
         fetchInterface.getContent().enqueue(new Callback<Contents>() {
             @Override
             public void onResponse(Call<Contents> call, Response<Contents> response) {
@@ -76,6 +79,12 @@ public class BookBaseActivity extends AppCompatActivity
                         Log.d(TAG, "onResponse: else" + chapter.getTitle());
                     }
                 }
+
+
+                fragment = BookPageFragment.getInstance(thisContents[0].getSections().get(0).getContent());
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.flBookFrame,fragment);
+                fragmentTransaction.commit();
 
                 exapndableListAdapter.notifyDataSetChanged();
 
@@ -125,10 +134,7 @@ public class BookBaseActivity extends AppCompatActivity
                             @Override
                             public void onResponse(Call<BookData> call, Response<BookData> response) {
                                 Log.d(TAG, "onResponse: ");
-                                Fragment fragment = BookPageFragment.getInstance(response.body().getSections().get(0).getContent());
-                                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.flBookFrame,fragment);
-                                fragmentTransaction.commit();
+                                ((BookPageFragment)fragment).replacePage(response.body().getSections().get(0).getContent());
                             }
 
                             @Override
@@ -161,10 +167,7 @@ public class BookBaseActivity extends AppCompatActivity
                             @Override
                             public void onResponse(Call<BookData> call, Response<BookData> response) {
                                 Log.d(TAG, "onResponse: ");
-                                Fragment fragment = BookPageFragment.getInstance(response.body().getSections().get(0).getContent());
-                                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.flBookFrame,fragment);
-                                fragmentTransaction.commit();
+                                ((BookPageFragment)fragment).replacePage((response.body().getSections().get(0).getContent()));
                             }
 
                             @Override
