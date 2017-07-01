@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.codingblocks.codingblocks.MainActivity">
-    <im.delight.android.webview.AdvancedWebView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/webview"></im.delight.android.webview.AdvancedWebView>
+        android:id="@+id/rvAllBooks"></android.support.v7.widget.RecyclerView>
 </RelativeLayout>

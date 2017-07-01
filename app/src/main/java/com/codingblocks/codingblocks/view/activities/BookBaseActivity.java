@@ -1,10 +1,7 @@
 package com.codingblocks.codingblocks.view.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -15,22 +12,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 
-import com.codingblocks.codingblocks.Network.API;
-import com.codingblocks.codingblocks.Network.APIBook;
-import com.codingblocks.codingblocks.Network.interfaces.apiFetchInterface;
+import com.codingblocks.codingblocks.network.API;
+import com.codingblocks.codingblocks.network.APIBook;
+import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.adapters.ExapndableListAdapter;
 
 import com.codingblocks.codingblocks.models.BookData;
 import com.codingblocks.codingblocks.models.Chapter;
 import com.codingblocks.codingblocks.models.Contents;
-import com.codingblocks.codingblocks.models.GenerateList;
 import com.codingblocks.codingblocks.view.fragments.BookPageFragment;
 
 import java.util.ArrayList;
@@ -59,7 +52,7 @@ public class BookBaseActivity extends AppCompatActivity
         final ArrayList<String> groupList = new ArrayList<>();
         final HashMap<String,ArrayList<String>> childMap = new HashMap<>();
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
-        apiFetchInterface fetchInterface = API.getInstance().retrofit.create(apiFetchInterface.class);
+        GitbookAPI fetchInterface = API.getInstance().retrofit.create(GitbookAPI.class);
         final Contents[] thisContents = new Contents[1];
 
 
@@ -133,7 +126,7 @@ public class BookBaseActivity extends AppCompatActivity
                     }
                 }
                 APIBook.getInstance().retrofit
-                        .create(apiFetchInterface.class)
+                        .create(GitbookAPI.class)
                         .getBook(ch.getPath())
                         .enqueue(new Callback<BookData>() {
                             @Override
@@ -166,7 +159,7 @@ public class BookBaseActivity extends AppCompatActivity
                 }
                 Log.d(TAG, "onChildClick: " + ch.getPath());
                 APIBook.getInstance().retrofit
-                        .create(apiFetchInterface.class)
+                        .create(GitbookAPI.class)
                         .getBook(ch.getPath())
                         .enqueue(new Callback<BookData>() {
                             @Override

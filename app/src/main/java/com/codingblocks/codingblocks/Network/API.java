@@ -1,4 +1,4 @@
-package com.codingblocks.codingblocks.Network;
+package com.codingblocks.codingblocks.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,4 +25,7 @@ public class API {
         }
         return apiInstance;
     }
+
+
+
 }
