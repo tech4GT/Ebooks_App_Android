@@ -14,9 +14,9 @@ public class Progress {
     @SerializedName("current")
     private Current mCurrent;
     @SerializedName("percent")
-    private Long mPercent;
+    private Double mPercent;
     @SerializedName("prevPercent")
-    private Long mPrevPercent;
+    private Double mPrevPercent;
 
     public List<Chapter> getChapters() {
         return mChapters;
@@ -34,19 +34,19 @@ public class Progress {
         mCurrent = current;
     }
 
-    public Long getPercent() {
+    public Double getPercent() {
         return mPercent;
     }
 
-    public void setPercent(Long percent) {
+    public void setPercent(Double percent) {
         mPercent = percent;
     }
 
-    public Long getPrevPercent() {
+    public Double getPrevPercent() {
         return mPrevPercent;
     }
 
-    public void setPrevPercent(Long prevPercent) {
+    public void setPrevPercent(Double prevPercent) {
         mPrevPercent = prevPercent;
     }
 

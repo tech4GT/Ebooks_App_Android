@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -25,7 +26,8 @@ import com.codingblocks.codingblocks.Network.APIBook;
 import com.codingblocks.codingblocks.Network.interfaces.apiFetchInterface;
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.adapters.ExapndableListAdapter;
-import com.codingblocks.codingblocks.models.BookData.BookData;
+
+import com.codingblocks.codingblocks.models.BookData;
 import com.codingblocks.codingblocks.models.Chapter;
 import com.codingblocks.codingblocks.models.Contents;
 import com.codingblocks.codingblocks.models.GenerateList;
@@ -51,6 +53,9 @@ public class BookBaseActivity extends AppCompatActivity
         setContentView(R.layout.activity_book_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar  actionBar = getSupportActionBar();
+        actionBar.setTitle("Blocks of JS");
+
         final ArrayList<String> groupList = new ArrayList<>();
         final HashMap<String,ArrayList<String>> childMap = new HashMap<>();
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);

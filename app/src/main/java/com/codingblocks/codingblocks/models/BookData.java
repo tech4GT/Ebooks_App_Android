@@ -1,5 +1,5 @@
 
-package com.codingblocks.codingblocks.models.BookData;
+package com.codingblocks.codingblocks.models;
 
 import java.util.List;
 import javax.annotation.Generated;

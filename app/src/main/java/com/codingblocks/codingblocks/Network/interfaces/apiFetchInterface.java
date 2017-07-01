@@ -1,6 +1,7 @@
 package com.codingblocks.codingblocks.Network.interfaces;
 
-import com.codingblocks.codingblocks.models.BookData.BookData;
+
+import com.codingblocks.codingblocks.models.BookData;
 import com.codingblocks.codingblocks.models.Contents;
 
 
