@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codingblocks.codingblocks.R;
+import com.codingblocks.codingblocks.interfaces.onItemClickListener;
 import com.codingblocks.codingblocks.models.AuthorBooksCB;
 import com.codingblocks.codingblocks.models.List;
 
@@ -21,6 +22,11 @@ public class AllBooksAdapter extends RecyclerView.Adapter<AllBooksAdapter.AllBoo
 
     private Context context;
     private ArrayList<List> booksCBArrayList;
+    private onItemClickListener clickListener;
+
+    public void setClickListener(onItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
     public AllBooksAdapter(Context context, ArrayList<List> booksCBArrayList) {
         this.context = context;
@@ -37,9 +43,17 @@ public class AllBooksAdapter extends RecyclerView.Adapter<AllBooksAdapter.AllBoo
 
     @Override
     public void onBindViewHolder(AllBooksViewHolder holder, int position) {
-        List thisBook = booksCBArrayList.get(position);
+        final List thisBook = booksCBArrayList.get(position);
         holder.tvBookTitle.setText(thisBook.getTitle());
         holder.tvBookDesc.setText(thisBook.getDescription());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickListener != null){
+                    clickListener.onItemClicklistener(thisBook);
+                }
+            }
+        });
     }
 
     @Override
@@ -50,11 +64,12 @@ public class AllBooksAdapter extends RecyclerView.Adapter<AllBooksAdapter.AllBoo
     public class AllBooksViewHolder extends RecyclerView.ViewHolder{
     TextView tvBookTitle;
     TextView tvBookDesc;
-
+    View itemView;
     public AllBooksViewHolder(View itemView) {
         super(itemView);
         tvBookTitle = (TextView) itemView.findViewById(R.id.tvBookTitle);
         tvBookDesc = (TextView) itemView.findViewById(R.id.tvBookDesc);
+        this.itemView = itemView;
     }
 }
 }

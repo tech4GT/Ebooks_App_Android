@@ -10,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.codingblocks.codingblocks.R;
+import com.codingblocks.codingblocks.models.Chapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,10 +22,10 @@ import java.util.List;
 
 public class ExapndableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private ArrayList<String> groupList;
-    private HashMap<String, ArrayList<String>> listDataChild;
+    private ArrayList<Chapter> groupList;
+    private HashMap<String, ArrayList<Chapter>> listDataChild;
 
-    public ExapndableListAdapter(Context context, ArrayList<String> groupList, HashMap<String, ArrayList<String>> listDataChild) {
+    public ExapndableListAdapter(Context context, ArrayList<Chapter> groupList, HashMap<String, ArrayList<Chapter>> listDataChild) {
         this.context = context;
         this.groupList = groupList;
         this.listDataChild = listDataChild;
@@ -38,17 +39,17 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-        return listDataChild.get(groupList.get(groupPosition)).size();
+        return listDataChild.get(groupList.get(groupPosition).getTitle()).size();
     }
 
     @Override
-    public String getGroup(int groupPosition) {
+    public Chapter getGroup(int groupPosition) {
         return groupList.get(groupPosition);
     }
 
     @Override
-    public String getChild(int groupPosition, int childPosition) {
-        return listDataChild.get(groupList.get(groupPosition)).get(childPosition);
+    public Chapter getChild(int groupPosition, int childPosition) {
+        return listDataChild.get(groupList.get(groupPosition).getTitle()).get(childPosition);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = li.inflate(android.R.layout.simple_list_item_1,null);
         TextView textView = (TextView) root.findViewById(android.R.id.text1);
-        textView.setText(getGroup(groupPosition));
+        textView.setText(getGroup(groupPosition).getTitle());
         return root;
     }
 
@@ -80,7 +81,7 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = li.inflate(R.layout.sublist_layout,null);
         TextView textView = (TextView) root.findViewById(R.id.tvSublist);
-        textView.setText(getChild(groupPosition,childPosition));
+        textView.setText(getChild(groupPosition,childPosition).getTitle());
         return root;
     }
 

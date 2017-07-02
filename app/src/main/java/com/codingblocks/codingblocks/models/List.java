@@ -49,6 +49,10 @@ public class List {
         return mAuthor;
     }
 
+    public Author getmAuthor() {
+        return mAuthor;
+    }
+
     public void setAuthor(Author author) {
         mAuthor = author;
     }

@@ -28,8 +28,9 @@ public interface GitbookAPI {
     @GET("author/coding-blocks/books")
     Call<AuthorBooksCB> getAllBooks();
 
-    @GET("book/{book}/contents")
-    Call<Contents> getThisBook(
+    @GET("book/{author}/{book}/contents")
+    Call<Contents> getThisBookContent(
+            @Path("author") String author,
             @Path("book") String bookId
     );
 

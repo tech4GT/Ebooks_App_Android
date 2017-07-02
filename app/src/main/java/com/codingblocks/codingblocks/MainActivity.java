@@ -13,11 +13,15 @@ import android.widget.Toast;
 
 
 import com.codingblocks.codingblocks.adapters.AllBooksAdapter;
+import com.codingblocks.codingblocks.interfaces.onItemClickListener;
 import com.codingblocks.codingblocks.models.AuthorBooksCB;
+import com.codingblocks.codingblocks.models.Contents;
 import com.codingblocks.codingblocks.models.List;
 import com.codingblocks.codingblocks.network.API;
 import com.codingblocks.codingblocks.network.APIAllBooks;
 import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
+import com.codingblocks.codingblocks.utils.Constants;
+import com.codingblocks.codingblocks.view.activities.BookBaseActivity;
 
 import java.util.ArrayList;
 
@@ -30,15 +34,31 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvAllBooks;
     public static final String TAG = "MainActivity";
+    ArrayList<List> allBooks;
+    AllBooksAdapter allBooksAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rvAllBooks = (RecyclerView) findViewById(R.id.rvAllBooks);
-        final ArrayList<List> allBooks = new ArrayList<>();
-        final AllBooksAdapter allBooksAdapter = new AllBooksAdapter(this, allBooks);
+        allBooks = new ArrayList<>();
+        allBooksAdapter = new AllBooksAdapter(this, allBooks);
         rvAllBooks.setLayoutManager(new LinearLayoutManager(this));
         rvAllBooks.setAdapter(allBooksAdapter);
+        fetchBooks();
+        onItemClickListener onItemClickListener = new onItemClickListener() {
+            @Override
+            public void onItemClicklistener(List thisBook) {
+                Intent i = new Intent(MainActivity.this,BookBaseActivity.class);
+                i.putExtra(Constants.BOOK_ID_KEY,thisBook.getName());
+                i.putExtra(Constants.BOOK_AUTHOR_KEY,thisBook.getmAuthor().getUsername());
+                startActivity(i);
+            }
+        };
+        allBooksAdapter.setClickListener(onItemClickListener);
+    }
+
+    public void fetchBooks(){
         API.getInstance()
                 .retrofit
                 .create(GitbookAPI.class)
@@ -58,5 +78,4 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }
