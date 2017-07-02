@@ -8,6 +8,7 @@ import com.codingblocks.codingblocks.models.Contents;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 /**
@@ -15,13 +16,21 @@ import retrofit2.http.Url;
  */
 
 public interface GitbookAPI {
-    @GET("blocks-of-javascript/contents")
-    Call<Contents> getContent();
+    @GET("blocks-of-javascript/{content}")
+    Call<Contents> getContent(
+
+    );
 
     @GET
     Call<BookData> getBook(
             @Url String url
     );
-    @GET("")
+    @GET("author/coding-blocks/books")
     Call<AuthorBooksCB> getAllBooks();
+
+    @GET("book/{book}/contents")
+    Call<Contents> getThisBook(
+            @Path("book") String bookId
+    );
+
 }

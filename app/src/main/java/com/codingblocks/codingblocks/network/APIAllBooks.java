@@ -14,7 +14,7 @@ public class APIAllBooks {
     private APIAllBooks(){
         retrofit =
                 new Retrofit.Builder()
-                .baseUrl("https://api.gitbook.com/")
+                .baseUrl("https://api.gitbook.com/author")
                 .addConverterFactory(
                         GsonConverterFactory.create()
                 ).build();

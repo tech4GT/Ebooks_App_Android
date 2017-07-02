@@ -13,7 +13,7 @@ public class API {
 
     private API () {
         retrofit
-                 = new Retrofit.Builder().baseUrl("https://api.gitbook.com/book/coding-blocks/")
+                 = new Retrofit.Builder().baseUrl("https://api.gitbook.com/")
                 .addConverterFactory(
                         GsonConverterFactory.create()
                 ).build();

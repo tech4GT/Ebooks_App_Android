@@ -30,7 +30,7 @@ public class List {
     private String mName;
     @SerializedName("permissions")
     private Permissions mPermissions;
-    @SerializedName("public")
+    @SerializedName("mPublic")
     private Boolean mPublic;
     @SerializedName("publish")
     private Publish mPublish;
@@ -137,8 +137,8 @@ public class List {
         return mPublic;
     }
 
-    public void setPublic(Boolean public) {
-        mPublic = public;
+    public void setPublic(Boolean mPublic) {
+        mPublic = mPublic;
     }
 
     public Publish getPublish() {

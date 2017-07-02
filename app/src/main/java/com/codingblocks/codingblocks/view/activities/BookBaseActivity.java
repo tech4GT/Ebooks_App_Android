@@ -1,5 +1,6 @@
 package com.codingblocks.codingblocks.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
+import com.codingblocks.codingblocks.MainActivity;
 import com.codingblocks.codingblocks.network.API;
 import com.codingblocks.codingblocks.network.APIBook;
 import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
@@ -40,48 +42,50 @@ public class BookBaseActivity extends AppCompatActivity
     ExpandableListView expandableListView;
     public static final String TAG = "BookBase";
     Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar  actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Blocks of JS");
 
         final ArrayList<String> groupList = new ArrayList<>();
-        final HashMap<String,ArrayList<String>> childMap = new HashMap<>();
-        final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this,groupList,childMap);
+        final HashMap<String, ArrayList<String>> childMap = new HashMap<>();
+        final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this, groupList, childMap);
         GitbookAPI fetchInterface = API.getInstance().retrofit.create(GitbookAPI.class);
         final Contents[] thisContents = new Contents[1];
-
 
         fetchInterface.getContent().enqueue(new Callback<Contents>() {
             @Override
             public void onResponse(Call<Contents> call, Response<Contents> response) {
 
                 Pattern pattern = Pattern.compile("(?<=^| )\\d+(\\.\\d+)?(?=$| )");
-                String thisGroup  = "";
+                String thisGroup = "";
                 ArrayList<String> thisGroupChild = new ArrayList<String>();
                 thisContents[0] = response.body();
-                for(Chapter chapter : response.body().getProgress().getChapters()){
-                    if(pattern.matcher(chapter.getLevel()).matches() ){
+                for (Chapter chapter : response.body().getProgress().getChapters()) {
+                    if (pattern.matcher(chapter.getLevel()).matches()) {
                         thisGroup = chapter.getTitle();
                         groupList.add(thisGroup);
                         thisGroupChild = new ArrayList<String>();
                         Log.d(TAG, "onResponse: if" + thisGroup);
-                        childMap.put(thisGroup,thisGroupChild);
-                    }else{
+                        childMap.put(thisGroup, thisGroupChild);
+                    } else {
                         thisGroupChild.add(chapter.getTitle());
-                        childMap.put(thisGroup,thisGroupChild);
+                        childMap.put(thisGroup, thisGroupChild);
                         Log.d(TAG, "onResponse: else" + chapter.getTitle());
                     }
+
+
                 }
 
 
                 fragment = BookPageFragment.getInstance(thisContents[0].getSections().get(0).getContent());
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.flBookFrame,fragment);
+                fragmentTransaction.add(R.id.flBookFrame, fragment);
                 fragmentTransaction.commit();
 
                 exapndableListAdapter.notifyDataSetChanged();
@@ -93,8 +97,6 @@ public class BookBaseActivity extends AppCompatActivity
 
             }
         });
-//
-//        GenerateList.generateList(groupList,childMap);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
@@ -119,10 +121,10 @@ public class BookBaseActivity extends AppCompatActivity
                 Log.d(TAG, "onGroupClick: ");
                 String thisJson = groupList.get(groupPosition);
                 Chapter ch = new Chapter();
-                for(Chapter contents : thisContents[0].getProgress().getChapters()){
-                    if(thisJson.equals(contents.getTitle())){
+                for (Chapter contents : thisContents[0].getProgress().getChapters()) {
+                    if (thisJson.equals(contents.getTitle())) {
                         ch = contents;
-                        ch.setPath(ch.getPath().replace(".md",".json"));
+                        ch.setPath(ch.getPath().replace(".md", ".json"));
                     }
                 }
                 APIBook.getInstance().retrofit
@@ -132,7 +134,7 @@ public class BookBaseActivity extends AppCompatActivity
                             @Override
                             public void onResponse(Call<BookData> call, Response<BookData> response) {
                                 Log.d(TAG, "onResponse: ");
-                                ((BookPageFragment)fragment).replacePage(response.body().getSections().get(0).getContent());
+                                ((BookPageFragment) fragment).replacePage(response.body().getSections().get(0).getContent());
                             }
 
                             @Override
@@ -151,10 +153,10 @@ public class BookBaseActivity extends AppCompatActivity
                 Log.d(TAG, "onChildClick: " + v.toString());
                 String thisJson = childMap.get(groupList.get(groupPosition)).get(childPosition);
                 Chapter ch = new Chapter();
-                for(Chapter contents : thisContents[0].getProgress().getChapters()){
-                    if(thisJson.equals(contents.getTitle())){
-                         ch = contents;
-                         ch.setPath(ch.getPath().replace(".md",".json"));
+                for (Chapter contents : thisContents[0].getProgress().getChapters()) {
+                    if (thisJson.equals(contents.getTitle())) {
+                        ch = contents;
+                        ch.setPath(ch.getPath().replace(".md", ".json"));
                     }
                 }
                 Log.d(TAG, "onChildClick: " + ch.getPath());
@@ -165,7 +167,7 @@ public class BookBaseActivity extends AppCompatActivity
                             @Override
                             public void onResponse(Call<BookData> call, Response<BookData> response) {
                                 Log.d(TAG, "onResponse: ");
-                                ((BookPageFragment)fragment).replacePage((response.body().getSections().get(0).getContent()));
+                                ((BookPageFragment) fragment).replacePage((response.body().getSections().get(0).getContent()));
                             }
 
                             @Override
@@ -203,4 +205,6 @@ public class BookBaseActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
