@@ -5,27 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
-import android.webkit.WebView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.codingblocks.codingblocks.adapters.AllBooksAdapter;
 import com.codingblocks.codingblocks.interfaces.onItemClickListener;
 import com.codingblocks.codingblocks.models.AuthorBooksCB;
-import com.codingblocks.codingblocks.models.Contents;
 import com.codingblocks.codingblocks.models.List;
 import com.codingblocks.codingblocks.network.API;
-import com.codingblocks.codingblocks.network.APIAllBooks;
 import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
 import com.codingblocks.codingblocks.utils.Constants;
 import com.codingblocks.codingblocks.view.activities.BookBaseActivity;
 
 import java.util.ArrayList;
 
-import im.delight.android.webview.AdvancedWebView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

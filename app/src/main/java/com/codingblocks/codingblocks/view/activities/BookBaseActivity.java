@@ -1,6 +1,5 @@
 package com.codingblocks.codingblocks.view.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,9 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
-import com.codingblocks.codingblocks.MainActivity;
 import com.codingblocks.codingblocks.network.API;
-import com.codingblocks.codingblocks.network.APIBook;
 import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.adapters.ExapndableListAdapter;
@@ -52,8 +49,8 @@ public class BookBaseActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Blocks of JS");
-        String bookId = getIntent().getStringExtra(Constants.BOOK_ID_KEY);
-        String bookAuthor = getIntent().getStringExtra(Constants.BOOK_AUTHOR_KEY);
+        final String bookId = getIntent().getStringExtra(Constants.BOOK_ID_KEY);
+        final String bookAuthor = getIntent().getStringExtra(Constants.BOOK_AUTHOR_KEY);
         Log.d(TAG, "onCreate: " + bookId);
         Log.d(TAG, "onCreate: " + bookAuthor);
 
@@ -61,11 +58,12 @@ public class BookBaseActivity extends AppCompatActivity
         final HashMap<String, ArrayList<Chapter>> childMap = new HashMap<>();
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this, groupList, childMap);
         final Contents[] thisContents = new Contents[1];
-
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
         API.getInstance()
                 .retrofit
                 .create(GitbookAPI.class)
-                .getThisBookContent(bookAuthor,bookId)
+                .getThisBookChapters(bookAuthor,bookId)
                 .enqueue(new Callback<Contents>() {
             @Override
             public void onResponse(Call<Contents> call, Response<Contents> response) {
@@ -91,8 +89,6 @@ public class BookBaseActivity extends AppCompatActivity
 
 
                 }
-
-
                 fragment = BookPageFragment.getInstance(thisContents[0].getSections().get(0).getContent());
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.flBookFrame, fragment);
@@ -108,8 +104,7 @@ public class BookBaseActivity extends AppCompatActivity
             }
         });
 
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
+
 
         expandableListView.setAdapter(exapndableListAdapter);
 
@@ -128,30 +123,30 @@ public class BookBaseActivity extends AppCompatActivity
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//                Log.d(TAG, "onGroupClick: ");
-//                String thisJson = groupList.get(groupPosition);
-//                Chapter ch = new Chapter();
-//                for (Chapter contents : thisContents[0].getProgress().getChapters()) {
-//                    if (thisJson.equals(contents.getTitle())) {
-//                        ch = contents;
-//                        ch.setPath(ch.getPath().replace(".md", ".json"));
-//                    }
-//                }
-//                API.getInstance().retrofit
-//                        .create(GitbookAPI.class)
-//                        .getBook(ch.getPath())
-//                        .enqueue(new Callback<BookData>() {
-//                            @Override
-//                            public void onResponse(Call<BookData> call, Response<BookData> response) {
-//                                Log.d(TAG, "onResponse: ");
-//                                ((BookPageFragment) fragment).replacePage(response.body().getSections().get(0).getContent());
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<BookData> call, Throwable t) {
-//                                Log.d(TAG, "onFailure: " + t.getMessage());
-//                            }
-//                        });
+                Log.d(TAG, "onGroupClick: ");
+                Chapter thisChapter = groupList.get(groupPosition);
+                        thisChapter.setPath(thisChapter.getPath().replace(".md", ".json"));
+                String[] chapters = thisChapter.getPath().split("\\/");
+                API.getInstance().retrofit
+                        .create(GitbookAPI.class)
+                        .getThisBookContent(
+                                bookAuthor,
+                                bookId,
+                                chapters[0],
+                                chapters[1]
+                        )
+                        .enqueue(new Callback<BookData>() {
+                            @Override
+                            public void onResponse(Call<BookData> call, Response<BookData> response) {
+                                Log.d(TAG, "onResponse: ");
+                                ((BookPageFragment) fragment).replacePage(response.body().getSections().get(0).getContent());
+                            }
+
+                            @Override
+                            public void onFailure(Call<BookData> call, Throwable t) {
+                                Log.d(TAG, "onFailure: " + t.getMessage());
+                            }
+                        });
 
                 return false;
             }
@@ -160,31 +155,32 @@ public class BookBaseActivity extends AppCompatActivity
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                Log.d(TAG, "onChildClick: " + v.toString());
-//                String thisJson = childMap.get(groupList.get(groupPosition)).get(childPosition);
-//                Chapter ch = new Chapter();
-//                for (Chapter contents : thisContents[0].getProgress().getChapters()) {
-//                    if (thisJson.equals(contents.getTitle())) {
-//                        ch = contents;
-//                        ch.setPath(ch.getPath().replace(".md", ".json"));
-//                    }
-//                }
-//                Log.d(TAG, "onChildClick: " + ch.getPath());
-//                APIBook.getInstance().retrofit
-//                        .create(GitbookAPI.class)
-//                        .getBook(ch.getPath())
-//                        .enqueue(new Callback<BookData>() {
-//                            @Override
-//                            public void onResponse(Call<BookData> call, Response<BookData> response) {
-//                                Log.d(TAG, "onResponse: ");
-//                                ((BookPageFragment) fragment).replacePage((response.body().getSections().get(0).getContent()));
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<BookData> call, Throwable t) {
-//                                Log.d(TAG, "onFailure: " + t.getMessage());
-//                            }
-//                        });
+                Log.d(TAG, "onChildClick: " + v.toString());
+                Chapter thisChapter = childMap.get(groupList.get(groupPosition).getTitle()).get(childPosition);
+                thisChapter.setPath(thisChapter.getPath().replace(".md", ".json"));
+                Log.d(TAG, "onChildClick: " + thisChapter.getPath());
+                String[] chapters = thisChapter.getPath().split("\\/");
+                Log.d(TAG, "onChildClick: " + chapters[0] + " " + chapters[1]);
+                API.getInstance().retrofit
+                        .create(GitbookAPI.class)
+                        .getThisBookContent(
+                                bookAuthor,
+                                bookId,
+                                chapters[0],
+                                chapters[1]
+                        )
+                        .enqueue(new Callback<BookData>() {
+                            @Override
+                            public void onResponse(Call<BookData> call, Response<BookData> response) {
+                                Log.d(TAG, "onResponse: " + response.body());
+                                ((BookPageFragment) fragment).replacePage((response.body().getSections().get(0).getContent()));
+                            }
+
+                            @Override
+                            public void onFailure(Call<BookData> call, Throwable t) {
+                                Log.d(TAG, "onFailure: " + t.getMessage());
+                            }
+                        });
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -214,6 +210,11 @@ public class BookBaseActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void setExpandableListClickListener(){
+
     }
 
 

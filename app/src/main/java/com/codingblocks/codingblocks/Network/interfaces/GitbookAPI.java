@@ -16,22 +16,22 @@ import retrofit2.http.Url;
  */
 
 public interface GitbookAPI {
-    @GET("blocks-of-javascript/{content}")
-    Call<Contents> getContent(
-
-    );
-
-    @GET
-    Call<BookData> getBook(
-            @Url String url
-    );
     @GET("author/coding-blocks/books")
     Call<AuthorBooksCB> getAllBooks();
 
     @GET("book/{author}/{book}/contents")
-    Call<Contents> getThisBookContent(
+    Call<Contents> getThisBookChapters(
             @Path("author") String author,
             @Path("book") String bookId
+    );
+
+    @GET("book/{author}/{book}/contents/{chapter}/{sub}")
+    Call<BookData> getThisBookContent(
+            @Path("author") String author,
+            @Path("book") String bookId,
+            @Path("chapter") String chapter,
+            @Path("sub") String subChapter
+
     );
 
 }
