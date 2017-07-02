@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">codingBlocks</string>
+    <string name="app_name">GitbookCB</string>
     <string name="title_activity_book_base">BookBaseActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

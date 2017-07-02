@@ -74,20 +74,20 @@ public class BookBaseActivity extends AppCompatActivity
                 String thisGroup = "";
                 ArrayList<Chapter> thisGroupChild = new ArrayList<Chapter>();
                 thisContents[0] = response.body();
-                for (Chapter chapter : response.body().getProgress().getChapters()) {
-                    if (pattern.matcher(chapter.getLevel()).matches()) {
-                        thisGroup = chapter.getTitle();
-                        groupList.add(chapter);
-                        thisGroupChild = new ArrayList<Chapter>();
-                        Log.d(TAG, "onResponse: if" + thisGroup);
-                        childMap.put(thisGroup, thisGroupChild);
-                    } else {
-                        thisGroupChild.add(chapter);
-                        childMap.put(thisGroup, thisGroupChild);
-                        Log.d(TAG, "onResponse: else" + chapter.getTitle());
+                if(response.body().getProgress().getChapters() != null) {
+                    for (Chapter chapter : response.body().getProgress().getChapters()) {
+                        if (pattern.matcher(chapter.getLevel()).matches()) {
+                            thisGroup = chapter.getTitle();
+                            groupList.add(chapter);
+                            thisGroupChild = new ArrayList<Chapter>();
+                            Log.d(TAG, "onResponse: if" + thisGroup);
+                            childMap.put(thisGroup, thisGroupChild);
+                        } else {
+                            thisGroupChild.add(chapter);
+                            childMap.put(thisGroup, thisGroupChild);
+                            Log.d(TAG, "onResponse: else" + chapter.getTitle());
+                        }
                     }
-
-
                 }
                 fragment = BookPageFragment.getInstance(thisContents[0].getSections().get(0).getContent());
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
