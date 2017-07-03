@@ -103,6 +103,12 @@ public class BookPageFragment extends Fragment {
                 ".ms table th {\n" +
                 "    font-weight: 700;\n" +
                 "}" +
+                ".ms code {\n" +
+                "    padding: .2em;\n" +
+                "    margin: 0;\n" +
+                "    font-size: .85em;\n" +
+                "    background-color: #e5e5e5;\n" +
+                "}" +
 
 //                =============== THEME STUFF =============
                 ".ct2 .dropdown-menu {\n" +
@@ -460,7 +466,7 @@ public class BookPageFragment extends Fragment {
                 "}\n" +
 
                 "</style><body>" +
-                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 ct2\">\n" +
+                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 {{theme}}\">\n" +
                 "                        <div class=\"search-noresults\">\n" +
                 "                            <xq class=\"nm ms\">" +
                 data +
