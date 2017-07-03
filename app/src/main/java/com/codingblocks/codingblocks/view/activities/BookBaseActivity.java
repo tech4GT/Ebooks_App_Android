@@ -1,11 +1,15 @@
 package com.codingblocks.codingblocks.view.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -42,9 +46,15 @@ public class BookBaseActivity extends AppCompatActivity
     public static final String TAG = "BookBase";
     Fragment fragment;
     String bookIntro = "";
+    boolean themeId = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences  = getSharedPreferences(Constants.THEME_PREFS, Context.MODE_PRIVATE);
+        themeId = sharedPreferences.getBoolean(Constants.THEME_KEY,false);
+        if(themeId){
+            setTheme(R.style.AppTheme_NoActionBar_white);
+        }
         setContentView(R.layout.activity_book_base);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,7 +101,7 @@ public class BookBaseActivity extends AppCompatActivity
                                     }
                                 }
                             }
-                            fragment = BookPageFragment.getInstance(bookIntro);
+                            fragment = BookPageFragment.getInstance(bookIntro,themeId);
                             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.add(R.id.flBookFrame, fragment);
                             fragmentTransaction.commit();
@@ -222,7 +232,6 @@ public class BookBaseActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 
 }

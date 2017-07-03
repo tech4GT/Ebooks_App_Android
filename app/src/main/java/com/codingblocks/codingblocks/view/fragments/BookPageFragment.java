@@ -26,10 +26,11 @@ public class BookPageFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static BookPageFragment getInstance(String data){
+    public static BookPageFragment getInstance(String data,Boolean themeId){
         BookPageFragment  bookPageFragment = new BookPageFragment();
         Bundle bundle = new Bundle();
         bundle.putString("data",data);
+        bundle.putBoolean("themeId",themeId);
         bookPageFragment.setArguments(bundle);
         return bookPageFragment;
     }
@@ -53,6 +54,11 @@ public class BookPageFragment extends Fragment {
 
 
     public void setData(String data){
+        String theme = "";
+        if(!getArguments().getBoolean("themeId",false)){
+            theme = "ct2";
+            Log.d(TAG, "setData: " + theme);
+        }
         String text = "<html><style>" +
                 "body {" +
                 "   margin: 0; padding: 0px" +
@@ -466,7 +472,9 @@ public class BookPageFragment extends Fragment {
                 "}\n" +
 
                 "</style><body>" +
-                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 ct2\">\n" +
+                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 " +
+                theme +
+                "\">\n" +
                 "                        <div class=\"search-noresults\">\n" +
                 "                            <xq class=\"nm ms\">" +
                 data +
