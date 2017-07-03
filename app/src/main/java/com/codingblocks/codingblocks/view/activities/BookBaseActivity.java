@@ -68,34 +68,36 @@ public class BookBaseActivity extends AppCompatActivity
                     @Override
                     public void onResponse(Call<Contents> call, Response<Contents> response) {
 
-                        Log.d(TAG, "onResponse: " + response.body());
+                        Log.d(TAG, "onResponse: " + response);
 
                         Pattern pattern = Pattern.compile("(?<=^| )\\d+(\\.\\d+)?(?=$| )");
                         String thisGroup = "";
                         ArrayList<Chapter> thisGroupChild = new ArrayList<Chapter>();
-                        bookIntro = response.body().getSections().get(0).getContent();
+                        if(response.body() != null) {
+                            bookIntro = response.body().getSections().get(0).getContent();
 
-                        if (response.body().getProgress().getChapters() != null) {
-                            for (Chapter chapter : response.body().getProgress().getChapters()) {
-                                if (pattern.matcher(chapter.getLevel()).matches()) {
-                                    thisGroup = chapter.getTitle();
-                                    groupList.add(chapter);
-                                    thisGroupChild = new ArrayList<Chapter>();
-                                    Log.d(TAG, "onResponse: if" + thisGroup);
-                                    childMap.put(thisGroup, thisGroupChild);
-                                } else {
-                                    thisGroupChild.add(chapter);
-                                    childMap.put(thisGroup, thisGroupChild);
-                                    Log.d(TAG, "onResponse: else" + chapter.getTitle());
+                            if (response.body().getProgress().getChapters() != null) {
+                                for (Chapter chapter : response.body().getProgress().getChapters()) {
+                                    if (pattern.matcher(chapter.getLevel()).matches()) {
+                                        thisGroup = chapter.getTitle();
+                                        groupList.add(chapter);
+                                        thisGroupChild = new ArrayList<Chapter>();
+                                        Log.d(TAG, "onResponse: if" + thisGroup);
+                                        childMap.put(thisGroup, thisGroupChild);
+                                    } else {
+                                        thisGroupChild.add(chapter);
+                                        childMap.put(thisGroup, thisGroupChild);
+                                        Log.d(TAG, "onResponse: else" + chapter.getTitle());
+                                    }
                                 }
                             }
-                        }
-                        fragment = BookPageFragment.getInstance(bookIntro);
-                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.flBookFrame, fragment);
-                        fragmentTransaction.commit();
+                            fragment = BookPageFragment.getInstance(bookIntro);
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.add(R.id.flBookFrame, fragment);
+                            fragmentTransaction.commit();
 
-                        exapndableListAdapter.notifyDataSetChanged();
+                            exapndableListAdapter.notifyDataSetChanged();
+                        }
 
                     }
 
