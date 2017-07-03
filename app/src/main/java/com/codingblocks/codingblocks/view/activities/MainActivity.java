@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this,BookBaseActivity.class);
                 i.putExtra(Constants.BOOK_ID_KEY,thisBook.getName());
                 i.putExtra(Constants.BOOK_AUTHOR_KEY,thisBook.getmAuthor().getUsername());
+                i.putExtra(Constants.BOOK_NAME,thisBook.getTitle());
                 startActivity(i);
             }
         };
@@ -85,4 +86,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

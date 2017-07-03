@@ -466,7 +466,7 @@ public class BookPageFragment extends Fragment {
                 "}\n" +
 
                 "</style><body>" +
-                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 {{theme}}\">\n" +
+                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 ct2\">\n" +
                 "                        <div class=\"search-noresults\">\n" +
                 "                            <xq class=\"nm ms\">" +
                 data +

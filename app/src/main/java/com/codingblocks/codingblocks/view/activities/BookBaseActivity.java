@@ -1,5 +1,6 @@
 package com.codingblocks.codingblocks.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -48,16 +49,15 @@ public class BookBaseActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Blocks of JS");
-        final String bookId = getIntent().getStringExtra(Constants.BOOK_ID_KEY);
-        final String bookAuthor = getIntent().getStringExtra(Constants.BOOK_AUTHOR_KEY);
-        Log.d(TAG, "onCreate: " + bookId);
-        Log.d(TAG, "onCreate: " + bookAuthor);
+        Intent i = getIntent();
+        final String bookId = i.getStringExtra(Constants.BOOK_ID_KEY);
+        final String bookAuthor = i.getStringExtra(Constants.BOOK_AUTHOR_KEY);
+        String bookName = i.getStringExtra(Constants.BOOK_NAME);
+        actionBar.setTitle(bookName);
 
         final ArrayList<Chapter> groupList = new ArrayList<>();
         final HashMap<String, ArrayList<Chapter>> childMap = new HashMap<>();
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this, groupList, childMap);
-        final Contents[] thisContents = new Contents[1];
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
         API.getInstance()
