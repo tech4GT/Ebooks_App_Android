@@ -2,7 +2,9 @@ package com.codingblocks.codingblocks.adapters;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Chapter> groupList;
     private HashMap<String, ArrayList<Chapter>> listDataChild;
-
+    public static final String TAG = "Expandable List View";
     public ExapndableListAdapter(Context context, ArrayList<Chapter> groupList, HashMap<String, ArrayList<Chapter>> listDataChild) {
         this.context = context;
         this.groupList = groupList;
@@ -81,7 +83,15 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = li.inflate(R.layout.sublist_layout,null);
         TextView textView = (TextView) root.findViewById(R.id.tvSublist);
-        textView.setText(getChild(groupPosition,childPosition).getTitle());
+        Chapter thisChapter = getChild(groupPosition,childPosition);
+        if (thisChapter == getChild(groupPosition,0)){
+
+            Log.d(TAG, "getChildView: " + thisChapter.getLevel().charAt(0));
+            textView.setText(String.valueOf(Integer.parseInt(String.valueOf(thisChapter.getLevel().charAt(2))) - 1)+ ". Introduction");
+        }else {
+            textView.setText(thisChapter.getTitle());
+        }
+
         return root;
     }
 

@@ -92,9 +92,11 @@ public class BookBaseActivity extends AppCompatActivity
                                         thisGroup = chapter.getTitle();
                                         groupList.add(chapter);
                                         thisGroupChild = new ArrayList<Chapter>();
-                                        
-                                        thisGroupChild.add(chapter);
                                         Log.d(TAG, "onResponse: if" + thisGroup);
+
+                                        if(chapter.getIndex() != 0){
+                                            thisGroupChild.add(chapter);
+                                        }
                                         childMap.put(thisGroup, thisGroupChild);
                                     } else {
                                         thisGroupChild.add(chapter);
@@ -133,45 +135,6 @@ public class BookBaseActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.d(TAG, "onGroupClick: ");
-                if (groupList.get(groupPosition) != null) {
-                    Chapter thisChapter = groupList.get(groupPosition);
-                    thisChapter.setPath(thisChapter.getPath().replace(".md", ".json"));
-                    if (thisChapter.getIndex() != 0) {
-                        String[] chapters = thisChapter.getPath().split("\\/");
-                        API.getInstance().retrofit
-                                .create(GitbookAPI.class)
-                                .getThisBookContent(
-                                        bookAuthor,
-                                        bookId,
-                                        chapters[0],
-                                        chapters[1]
-                                )
-                                .enqueue(new Callback<BookData>() {
-                                    @Override
-                                    public void onResponse(Call<BookData> call, Response<BookData> response) {
-                                        Log.d(TAG, "onResponse: ");
-                                        ((BookPageFragment) fragment).replacePage(response.body().getSections().get(0).getContent());
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<BookData> call, Throwable t) {
-                                        Log.d(TAG, "onFailure: " + t.getMessage());
-                                    }
-                                });
-                    }else{
-                        Log.d(TAG, "onGroupClick: " + bookIntro);
-                        ((BookPageFragment) fragment).replacePage(bookIntro);
-                    }
-                }
-
-                return false;
-            }
-        });
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
