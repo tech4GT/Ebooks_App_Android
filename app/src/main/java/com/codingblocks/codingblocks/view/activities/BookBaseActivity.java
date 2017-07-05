@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -70,6 +71,12 @@ public class BookBaseActivity extends AppCompatActivity
         final ExapndableListAdapter exapndableListAdapter = new ExapndableListAdapter(this, groupList, childMap);
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         expandableListView = (ExpandableListView) findViewById(R.id.evNavigationList);
+
+        if(themeId){
+            expandableListView.setBackgroundColor(Color.parseColor("#fafafa"));
+        }else{
+            expandableListView.setBackgroundColor(Color.parseColor("#2d3143"));
+        }
         API.getInstance()
                 .retrofit
                 .create(GitbookAPI.class)

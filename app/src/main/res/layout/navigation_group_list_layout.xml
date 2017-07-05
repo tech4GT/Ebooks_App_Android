@@ -11,4 +11,5 @@
     android:text="2.1 Variables"
     android:textStyle="bold"
     android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight" />
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    />

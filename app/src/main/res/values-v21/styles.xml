@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="AppTheme.white" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -31,5 +32,22 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="Expandablelistview" parent="@android:style/Widget.ExpandableListView">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="navigationTextVew" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">#c1c6d7</item>
+    </style>
+
+    <style name="Expandablelistview.White" parent="@android:style/Widget.ExpandableListView">
+        <item name="android:background">#fafafa</item>
+    </style>
+
+    <style name="navigationTextVew.White" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">#364149</item>
+    </style>
+
 
 </resources>

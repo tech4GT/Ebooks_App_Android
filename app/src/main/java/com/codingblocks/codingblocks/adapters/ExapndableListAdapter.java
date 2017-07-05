@@ -3,6 +3,7 @@ package com.codingblocks.codingblocks.adapters;
 import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.codingblocks.codingblocks.R;
 import com.codingblocks.codingblocks.models.Chapter;
+import com.codingblocks.codingblocks.utils.GetSharedPrefsValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,6 +77,12 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
         View root = li.inflate(R.layout.navigation_group_list_layout,null);
         TextView textView = (TextView) root.findViewById(R.id.tvGroupList);
         textView.setText(getGroup(groupPosition).getTitle());
+        if(GetSharedPrefsValue.getTheme(context)){
+            textView.setTextColor(Color.parseColor("#364149"));
+        }else{
+            textView.setTextColor(Color.parseColor("#c1c6d7"));
+        }
+
         return root;
     }
 
@@ -90,6 +98,12 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
             textView.setText(String.valueOf(Integer.parseInt(String.valueOf(thisChapter.getLevel().charAt(2))) - 1)+ ". Introduction");
         }else {
             textView.setText(thisChapter.getTitle());
+        }
+
+        if(GetSharedPrefsValue.getTheme(context)){
+            textView.setTextColor(Color.parseColor("#364149"));
+        }else{
+            textView.setTextColor(Color.parseColor("#c1c6d7"));
         }
 
         return root;

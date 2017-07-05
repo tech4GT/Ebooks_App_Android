@@ -8,8 +8,29 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.white" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#fc4f4f</item>
+        <item name="colorPrimaryDark">#c20626</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Expandablelistview" parent="@android:style/Widget.ExpandableListView">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">#c1c6d7</item>
+    </style>
+
 
     <style name="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.white">
+        <item name="colorPrimary">#fc4f4f</item>
+        <item name="colorPrimaryDark">#c20626</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
