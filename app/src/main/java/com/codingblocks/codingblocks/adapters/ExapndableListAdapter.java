@@ -70,8 +70,8 @@ public class ExapndableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root = li.inflate(android.R.layout.simple_list_item_1,null);
-        TextView textView = (TextView) root.findViewById(android.R.id.text1);
+        View root = li.inflate(R.layout.navigation_group_list_layout,null);
+        TextView textView = (TextView) root.findViewById(R.id.tvGroupList);
         textView.setText(getGroup(groupPosition).getTitle());
         return root;
     }

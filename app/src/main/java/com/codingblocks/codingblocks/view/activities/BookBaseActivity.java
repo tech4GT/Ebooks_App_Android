@@ -92,6 +92,8 @@ public class BookBaseActivity extends AppCompatActivity
                                         thisGroup = chapter.getTitle();
                                         groupList.add(chapter);
                                         thisGroupChild = new ArrayList<Chapter>();
+                                        
+                                        thisGroupChild.add(chapter);
                                         Log.d(TAG, "onResponse: if" + thisGroup);
                                         childMap.put(thisGroup, thisGroupChild);
                                     } else {

@@ -11,5 +11,6 @@
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:paddingLeft="35dp"
         android:paddingRight="40dp"
-        android:text="2.1 Variables" />
+        android:text="2.1 Variables"
+        android:textStyle="bold"/>
 

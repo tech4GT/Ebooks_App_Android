@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvGroupList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+    android:gravity="center_vertical"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="40dp"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:paddingRight="40dp"
+    android:text="2.1 Variables"
+    android:textStyle="bold"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft" />
