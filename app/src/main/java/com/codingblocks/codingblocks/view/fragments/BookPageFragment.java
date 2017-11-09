@@ -68,20 +68,7 @@ public class BookPageFragment extends Fragment {
         sb.append(data);
         sb.append("</xq>\n"+
                 "</div>\n" +
-                "</div></BODY></html>");
-
-
-//        String text =
-//                "<div class=\"gb without-animation with-summary font-size-2 font-family-1 " +
-//                theme +
-//                "\">\n" +
-//                "                        <div class=\"search-noresults\">\n" +
-//                "                            <xq class=\"nm ms\">" +
-//                data +
-//                "                            </xq>\n" +
-//                "    </div>\n" +
-//                "</div></body></html>";
-
+                "</div></body></HTML>");
 
         webView.setCookiesEnabled(false);
         webView.setMixedContentAllowed(false);
@@ -94,7 +81,6 @@ public class BookPageFragment extends Fragment {
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setDisplayZoomControls(false);
         webView.animate();
-//        webView.loadHtml(text);
         webView.loadDataWithBaseURL("file:///android_asset/",sb.toString(),"text/html","utf-8",null);
 
     }
