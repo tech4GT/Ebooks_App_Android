@@ -24,9 +24,6 @@ repositories {
         url 'https://jitpack.io'
 
     }
-    maven {
-        url "http://repo.pageturner-reader.org"
-    }
 }
 
 dependencies {
