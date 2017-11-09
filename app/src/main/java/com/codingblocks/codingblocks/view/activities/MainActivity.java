@@ -23,6 +23,7 @@ import com.codingblocks.codingblocks.models.List;
 import com.codingblocks.codingblocks.network.API;
 import com.codingblocks.codingblocks.network.interfaces.GitbookAPI;
 import com.codingblocks.codingblocks.utils.Constants;
+import com.codingblocks.codingblocks.utils.UtilityMethods;
 
 import java.util.ArrayList;
 
@@ -79,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        Log.d(TAG, "onCreate: " + this.getCacheDir());
+        Log.d(TAG, "onCreate: " + this.getApplicationContext().getCacheDir());
     }
 
     @Override
@@ -101,24 +103,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchBooks(){
-        API.getInstance()
-                .retrofit
-                .create(GitbookAPI.class)
-                .getAllBooks()
-                .enqueue(new Callback<AuthorBooksCB>() {
-                    @Override
-                    public void onResponse(Call<AuthorBooksCB> call, Response<AuthorBooksCB> response) {
-                        Log.d(TAG, "onResponse: "  + String.valueOf(response.body().getList().size()));
-                        allBooks.addAll(response.body().getList());
-                        allBooksAdapter.notifyDataSetChanged();
-                    }
+        if(UtilityMethods.isNetworkConnected(this)) {
+            API.getInstance(MainActivity.this)
+                    .retrofit
+                    .create(GitbookAPI.class)
+                    .getAllBooks()
+                    .enqueue(new Callback<AuthorBooksCB>() {
+                        @Override
+                        public void onResponse(Call<AuthorBooksCB> call, Response<AuthorBooksCB> response) {
+                            Log.d(TAG, "onResponse: " + String.valueOf(response.body().getList().size()));
+                            allBooks.addAll(response.body().getList());
+                            allBooksAdapter.notifyDataSetChanged();
+                        }
 
-                    @Override
-                    public void onFailure(Call<AuthorBooksCB> call, Throwable t) {
-                        Log.d(TAG, "onFailure: " + t.getMessage());
-                        Toast.makeText(MainActivity.this, "Sorry Could not Fetch Books", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<AuthorBooksCB> call, Throwable t) {
+                            Log.d(TAG, "onFailure: " + t.getMessage());
+                            Toast.makeText(MainActivity.this, "Sorry Could not Fetch Books", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     public void toggleTheme(){
