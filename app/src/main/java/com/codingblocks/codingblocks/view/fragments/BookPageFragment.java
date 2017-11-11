@@ -1,6 +1,7 @@
 package com.codingblocks.codingblocks.view.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -55,9 +56,16 @@ public class BookPageFragment extends Fragment {
 
     public void setData(String data){
         String theme = "";
+        int backgroundColor = R.color.bookLightBackground;
         if(!getArguments().getBoolean("themeId",false)){
             theme = "ct2";
             Log.d(TAG, "setData: " + theme);
+            backgroundColor = R.color.bookDarkBakcground;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            webView.setBackgroundColor(getResources().getColor(backgroundColor,null));
+        }else{
+            webView.setBackgroundColor(getResources().getColor(backgroundColor));
         }
         StringBuilder sb = new StringBuilder();
         sb.append("<HTML><HEAD><LINK href=\"style.css\" type=\"text/css\" rel=\"stylesheet\"/></HEAD><body>");
