@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.codingblocks.codingblocks"
         minSdkVersion 16
@@ -24,6 +26,7 @@ repositories {
         url 'https://jitpack.io'
 
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -44,4 +47,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile 'org.jetbrains.anko:anko-common:0.9'
+
 }
